@@ -1,7 +1,7 @@
 # 📄 CẤU TRÚC CHI TIẾT BÁO CÁO CUỐI KỲ
 
 > **Format:** PDF | A4 | Double-spaced | Font Arial 12pt  
-> **Độ dài:** 20–30 trang  
+> **Độ dài:** 30-50 trang (nội dung chính, còn phụ lục chắc là các giao diện UI, sơ đồ,...)  
 > **Ngôn ngữ:** Tiếng Việt (hoặc Anh, tùy yêu cầu thầy/cô)
 
 ---
