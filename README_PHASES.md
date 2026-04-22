@@ -113,6 +113,6 @@ Page 4: Prototype (interactive flow)
 | 🧪 QA | Testing & QA section, bug reports, performance results | Test matrix, bug reports (fixed), performance stats |
 
 **Format báo cáo cuối:**
-- PDF, A4, double-spaced, 12pt Arial
+- PDF, A4, double-spaced, 13pt Time new Roman
 - Cover page + Table of Contents + Executive Summary + 5 sections + References + Appendix
-- Độ dài: **20–30 trang**
+- Độ dài: **30-50 trang**
