@@ -1,7 +1,7 @@
 # ⚡ CHEAT SHEET NHANH — VIỆC CẦN LÀM THEO VAI TRÒ
 
-> Dùng file này như một **to-do list cá nhân** theo từng vai trò.  
-> Mỗi tuần check lại xem bản thân đang ở đâu trong tiến độ.
+> To-do list cá nhân theo từng vai trò trong 10 tuần.  
+> Check lại mỗi tuần — **Figma là đầu ra quan trọng nhất** theo yêu cầu thầy.
 
 ---
 
@@ -9,16 +9,18 @@
 
 | Tuần | Việc cần làm |
 |------|-------------|
-| 1–2 | Lập Feature Matrix 3 vai trò |
-| 3–4 | Phân tích sâu từng tính năng + nghiên cứu competitor (Shopee, Tiki, Amazon) |
-| 5–7 | Review & approve toàn bộ diagrams từ Backend & QA |
-| 8–10 | Coordinate integration, theo dõi tiến độ, update Gantt chart |
-| 11–12 | Viết báo cáo hoàn chỉnh (Introduction, Analysis, Conclusion) + tổng hợp toàn bộ |
+| 1 | Phân tích pain point 3 đối tượng (Khách hàng, THỔ, Hệ thống); lên Feature Matrix sơ bộ |
+| 2 | Hoàn thiện Feature Matrix 3 nghiệp vụ; research competitor gốm sứ (Etsy, Airbnb Exp.) |
+| 3–4 | Review wireframe Designer; đảm bảo logic 3 luồng đúng nghiệp vụ |
+| 5–6 | Review Hi-Fi + approve ERD + Use Case; chuẩn bị nội dung báo cáo phần Analysis |
+| 7–8 | Coordinate integration; track tiến độ code |
+| 9–10 | Viết Introduction, Analysis, Conclusion; tổng hợp toàn bộ báo cáo; chuẩn bị slide |
 
-**Câu hỏi cần trả lời được:**
-- Pain point của user là gì?
-- Tại sao khách hàng chọn sản phẩm mình thay vì đối thủ?
-- Những tính năng nào đột phá nhất?
+**Câu hỏi thầy sẽ hỏi — cần trả lời được:**
+- Khách hàng mua gốm online gặp vấn đề gì mà các shop bình thường không giải quyết được?
+- Ceramic Tracker giải quyết "khoảng trống thông tin" 2-3 tuần như thế nào?
+- Tại sao THỔ dùng Hybrid Cart thay vì tách 2 website riêng?
+- 3 đối tượng (Customer / THỔ / System) có nhu cầu gì khác nhau?
 
 ---
 
@@ -26,17 +28,20 @@
 
 | Tuần | Việc cần làm |
 |------|-------------|
-| 1–2 | Đánh giá technical feasibility, gợi ý công nghệ |
-| 3–4 | Xác định technical components (Address 1-N, Product_Variant, Image API...) |
-| 5–7 | **FOCUS:** Vẽ ERD (User–Address 1-N, Product–Variant 1-N), vẽ Use Case |
-| 8–10 | Code backend — ít nhất **10 API endpoints** |
-| 11–12 | Viết phần "Technical Architecture" trong báo cáo |
+| 1–2 | Đánh giá kỹ thuật Hybrid Cart, Smart Slot, Tracker state machine |
+| 3–4 | Vẽ BPMN Luồng 1 + 2; tham gia vẽ Luồng 3 (Tracker) cùng QA |
+| 5 | Thiết kế ERD đầy đủ — WorkshopSlot + Instructor + Equipment + CeramicTracker |
+| 6 | Hoàn thiện ERD; vẽ Use Case; được BA/PM approve |
+| 7–8 | Code backend: schema.sql → API endpoints → notification service |
+| 9–10 | Viết phần Technical Architecture trong báo cáo |
 
-**Checklist cá nhân tuần 5–7:**
-- [ ] ERD có User–Address là 1-N (không phải 1-1!)
-- [ ] ERD có Product–ProductVariant là 1-N
-- [ ] Use Case có ≥5 UC với include/extend
-- [ ] BPMN có ≥10 nodes, 3 swimlane
+**Checklist ERD tuần 5:**
+- [ ] `WorkshopSlot` kết nối với `Instructors` (M-N) và `Equipments` (M-N)
+- [ ] `CeramicTracker` có các stage: Forming/Drying/BisqueFiring/Glazing/GlazeFiring/Ready
+- [ ] `CeramicTracker` → `Notifications` (1-N) — lưu lịch sử gửi thông báo
+- [ ] `Orders` tách thành `PhysicalOrderItems` và `WorkshopBookings`
+- [ ] `Users` → `Addresses` là 1-N (không phải 1-1!)
+- [ ] Ghi rõ ràng buộc: `if instructor=0 OR equipment=0 → slot.status = Full`
 
 ---
 
@@ -44,71 +49,93 @@
 
 | Tuần | Việc cần làm |
 |------|-------------|
-| 1–2 | Tham gia brainstorm, gợi ý tech stack |
-| 3–4 | Xác định technical stack chính thức |
-| 5–7 | Review Figma, planning component structure, lập danh sách component |
-| 8–10 | Setup React project → Build ≥8 components → Integrate API |
-| 11–12 | Viết phần "Frontend Implementation" + chụp screenshots UI |
+| 1–2 | Tham gia brainstorm; đề xuất stack (Next.js, React Query, Tailwind) |
+| 3–4 | Review Figma wireframe; lên component list |
+| 5–6 | Review Figma Hi-Fi; planning component structure chi tiết |
+| 7 | Setup Next.js project; build TrackerTimeline, HybridCart, SlotCalendar |
+| 8 | Integrate API; live demo; loading/error states |
+| 9–10 | Viết phần Frontend Implementation; chụp screenshots so sánh Figma ↔ Code |
 
-**Checklist cá nhân tuần 8–10:**
-- [ ] SearchBar có icon camera (Visual Search)
-- [ ] Cart có Quick Edit button (không chỉ có Delete)
-- [ ] AddressSelector hiển thị danh sách từ API (1-N)
-- [ ] Loading skeletons cho các screen chính
-- [ ] Mobile responsive đã test
-
----
-
-## 🎨 Designer / Figma
-
-| Tuần | Việc cần làm |
-|------|-------------|
-| 1–2 | Tham gia brainstorm, gợi ý tính năng từ góc UX |
-| 3–4 | Research UI patterns (Shopee, Tiki, Amazon) — ghi chú điểm mạnh/yếu |
-| 5–6 | **Wireframe (Low-fi):** Toàn bộ flow chính |
-| 6–7 | **Hi-Fi Design + Prototype:** Interactive flow |
-| 8–10 | Hand off design spec cho Frontend, QA design implementation |
-| 11–12 | Viết phần "UI/UX Design Process" + export design assets |
-
-**Checklist Figma cá nhân:**
-- [ ] Wireframe: Search → Results → Detail → Cart → Address → Checkout → Confirmation
-- [ ] Hi-Fi: Color scheme, typography, spacing nhất quán
-- [ ] Prototype: ≥3 interactive journeys
-- [ ] Mobile frames đã làm song song desktop
+**Checklist components tuần 7-8:**
+- [ ] `TrackerTimeline`: Hiển thị 6 stages với progress indicator + notification history
+- [ ] `HybridCart`: Phân tách rõ Physical Item vs Workshop Ticket
+- [ ] `SlotCalendar`: Show available/full (disabled) slots
+- [ ] `BookingQR`: Render QR code sau khi booking thành công
+- [ ] `StageStatusBadge`: Màu khác nhau theo stage (Terracotta khi đang nung, Celadon khi Ready)
+- [ ] Mobile responsive — Tracker đặc biệt phải đẹp trên mobile
 
 ---
 
-## 🧪 QA / Tester
+## 🎨 Designer / Figma ⭐ *Vai trò quan trọng nhất giai đoạn đầu*
 
 | Tuần | Việc cần làm |
 |------|-------------|
-| 1–2 | Gợi ý test scenarios ban đầu |
-| 3–4 | Lập comprehensive test case list từ Feature Matrix |
-| 5–7 | **FOCUS:** Vẽ BPMN + Use Case diagram (Draw.io) |
-| 8–10 | Test code từ Backend & Frontend; report bugs; chụp screenshots |
-| 11–12 | Viết phần "Testing & QA" + final checklist |
+| 1 | Moodboard trên **impeccable.style**: màu Terracotta + Celadon, tone thủ công; tham khảo UI gốm nước ngoài |
+| 2 | Xác định Design System: màu, font, spacing, component types |
+| 3 | Wireframe Low-fi: Homepage, Shop, Product Detail, Workshop Listing, Booking Form |
+| 4 | Wireframe Low-fi: Tracker Dashboard, Timeline, Hybrid Cart, Checkout, Confirmation |
+| 5 | Hi-Fi Design: Áp dụng màu THỔ; Component library (buttons, cards, badges, timeline) |
+| 6 | Hi-Fi tiếp: Tracker Timeline UI đặc biệt; Hybrid Cart; Build Prototype 4 journeys |
+| 7–8 | Hand off design spec cho FE; QA implementation; tạo Design Handbook |
+| 9–10 | Viết phần UI/UX Design Process; export screenshot từng screen; ghi chú Design Rationale |
 
-**Checklist cá nhân tuần 5–7:**
-- [ ] BPMN có 3 swimlane (Customer, System, Warehouse)
-- [ ] BPMN có ≥10 nodes
-- [ ] BPMN có exception handling (lỗi, hủy đơn)
-- [ ] Use Case có ≥5 UC
-- [ ] Use Case có `<<include>>` và `<<extend>>`
+**Checklist Figma tuần 5-6:**
+- [ ] Tracker Timeline UI: progress bar theo chiều dọc (mobile-friendly), 6 giai đoạn với icon và màu stage
+- [ ] Hybrid Cart: 2 sections phân biệt — "🏺 Sản phẩm gốm" vs "🎫 Vé Workshop"
+- [ ] Workshop Slot: Hiển thị rõ "Available ✅" vs "Full ❌" vs "Gần đầy ⚠️"
+- [ ] Notification screen: Timeline nhận thông báo kèm ảnh giai đoạn
+- [ ] Mobile version: Tracker screen tối thiểu 1 frame
 
-**Khi testing (tuần 8–10), focus vào:**
-- [ ] Visual Search: Upload ảnh → nhận kết quả?
-- [ ] Cart Quick Edit: Đổi size mà không phải xóa rồi thêm lại?
-- [ ] Address: Thêm nhiều địa chỉ, chọn địa chỉ khi checkout?
-- [ ] Edge cases: Hàng hết stock, địa chỉ không hợp lệ, ảnh không nhận diện được
+**Sử dụng impeccable.style cho:**
+- Radial Map stakeholder (THỔ ở giữa)
+- Flow diagram Hybrid Cart (input → process → output)
+- Palette nodes với mã hex để confirm vibe thương hiệu
+
+---
+
+## 🧪 QA / Tester & Diagram
+
+| Tuần | Việc cần làm |
+|------|-------------|
+| 1–2 | Phác thảo test scenarios cho 3 luồng; xác định edge cases đặc thù gốm |
+| 3 | Vẽ BPMN Luồng 1 + 2 (cùng Backend) |
+| 4 | **FOCUS:** Vẽ BPMN Luồng 3 — Ceramic Tracker (luồng phức tạp nhất) |
+| 5–6 | Vẽ Use Case Diagram (6 UC); review ERD cùng Backend |
+| 7–8 | Testing 3 flows; báo bugs; performance check |
+| 9–10 | Viết phần BPMN giải thích + Testing & QA; final checklist |
+
+**Checklist BPMN Luồng 3 (Tracker) — tuần 4:**
+- [ ] Swimlane 3 phần: Khách hàng | Hệ thống | Nghệ nhân (Admin lò)
+- [ ] Có 6 stage nodes + 1 start node (Check-in QR) + 1 end node (Giao hàng)
+- [ ] Mỗi stage → có gateway gửi Notification
+- [ ] Exception branch: "Nung lỗi (Cracked)" → Làm đền HOẶC Hoàn tiền
+- [ ] Tối thiểu **15 nodes**
+
+**Edge cases cần test (tuần 8):**
+- [ ] Đặt workshop khi Instructor bận → hiển thị "Full", gợi ý slot khác
+- [ ] Tracker: Admin cập nhật stage sai thứ tự → hệ thống từ chối
+- [ ] Hybrid Cart: Thanh toán → kiểm tra 2 email gửi đúng nội dung
+- [ ] Nung lỗi → flow hoàn tiền hoạt động đúng
+- [ ] Slot calendar: đồng thời 2 người đặt cùng 1 slot → race condition
 
 ---
 
 ## 📌 Câu hỏi thầy/cô hay hỏi khi bảo vệ
 
-> Chuẩn bị sẵn câu trả lời cho các câu hỏi sau:
+1. **Ceramic Tracker hoạt động như thế nào về mặt kỹ thuật?**
+   → Admin lò cập nhật stage trên hệ thống → trigger notification service → push to khách qua email/app
 
-1. **Tại sao chọn lĩnh vực này?** → Dẫn data pain point thực tế
-2. **Tính năng đột phá của nhóm so với Shopee/Tiki là gì?** → Visual Search + Quick Edit + Address 1-N
-3. **ERD của nhóm User–Address là quan hệ gì? Tại sao?** → 1-N vì user có nhiều địa chỉ giao hàng
-4. **Khi user muốn đổi size trong giỏ hàng, flow như thế nào?** → Quick Edit button, không xóa rồi thêm lại
-5. **Tìm kiếm bằng ảnh hoạt động như thế nào về mặt kỹ thuật?** → Image recognition API (VD: Google Vision), gửi ảnh → nhận tag → tìm product match
+2. **Hybrid Cart phức tạp ở điểm nào?**
+   → Backend phải tách 1 order thành 2 luồng xử lý hoàn toàn khác: logistics cho sản phẩm vật lý, QR + lịch hẹn cho workshop
+
+3. **Tại sao Smart Slot cần kiểm tra cả Nghệ nhân lẫn Bàn xoay?**
+   → Thiếu 1 trong 2 đều không tổ chức được workshop — đây là nghiệp vụ thực tế, không phải chỉ check số lượng slot
+
+4. **ERD User-Address quan hệ gì? Tại sao?**
+   → 1-N, vì 1 người có thể có nhiều địa chỉ giao hàng (nhà riêng, văn phòng, tặng người khác)
+
+5. **Ceramic Tracker giải quyết vấn đề gì cụ thể?**
+   → 2-3 tuần chờ gốm là "khoảng trống thông tin" — khách không biết tiến độ, dễ lo lắng → Tracker giải quyết bằng cách cá nhân hóa hành trình sản phẩm, tăng gắn kết cảm xúc
+
+6. **Tại sao dùng Figma làm cơ sở phân tích trong báo cáo?**
+   → Figma prototype cho phép thấy trực quan cách hệ thống phản hồi pain point; mỗi screen Figma tương ứng 1 quyết định thiết kế có lý do rõ ràng
