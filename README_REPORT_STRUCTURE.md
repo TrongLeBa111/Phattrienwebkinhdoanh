@@ -1,194 +1,218 @@
-# 📄 CẤU TRÚC CHI TIẾT BÁO CÁO CUỐI KỲ
+# 📄 CẤU TRÚC CHI TIẾT BÁO CÁO CUỐI KỲ — DỰ ÁN THỔ
 
-> **Format:** PDF | A4 | Double-spaced | Font Arial 12pt  
-> **Độ dài:** 30-50 trang (nội dung chính, còn phụ lục chắc là các giao diện UI, sơ đồ,...)  
-> **Ngôn ngữ:** Tiếng Việt (hoặc Anh, tùy yêu cầu thầy/cô)
+> **Format:** PDF | A4 | 12pt Arial  
+> **Độ dài:** 20–30 trang  
+> **Nguyên tắc:** Figma là cơ sở phân tích & tham khảo — mỗi luận điểm phải có screen Figma minh hoạ
 
 ---
 
 ## 📑 COVER PAGE
-
-- Tên dự án
+- Tên dự án: **THỔ — Nền tảng Gốm Sứ Trực Tuyến**
 - Tên nhóm & danh sách thành viên (kèm vai trò)
-- Ngày nộp
-- Giảng viên hướng dẫn
+- Ngày nộp | Giảng viên hướng dẫn
 
 ---
 
 ## 📑 TABLE OF CONTENTS
-
-Auto-generated từ headings (dùng Word styles hoặc LaTeX)
+Auto-generated từ headings
 
 ---
 
 ## 📑 EXECUTIVE SUMMARY *(1 trang)*
-
-Tóm tắt ngắn gọn:
-- **Vấn đề** (Problem): Pain point được xác định là gì?
-- **Giải pháp** (Solution): Hệ thống giải quyết như thế nào?
-- **Kết quả** (Result): Đạt được gì sau dự án?
+- **Problem:** Thị trường gốm sứ thiếu nền tảng số kết nối mua hàng + trải nghiệm workshop
+- **Solution:** THỔ — tích hợp E-commerce + Workshop Booking + Ceramic Tracker trong một hệ thống
+- **Breakthrough:** Ceramic Tracker giải quyết "khoảng trống thông tin" 2-3 tuần khách chờ thành phẩm
 
 ---
 
-## 📑 I. INTRODUCTION *(2–3 trang)*
+## 📑 I. INTRODUCTION *(2–3 trang)* — 🎯 BA/PM
 
-- **1.1 Background:** Xu hướng E-Commerce hiện nay, lý do chọn lĩnh vực
-- **1.2 Objective:** Mục tiêu dự án (đặt ra từ đầu)
-- **1.3 Scope:** Phạm vi công việc (những gì làm được & không làm)
+- **1.1 Bối cảnh thị trường:** Xu hướng handmade & DIY; gốm sứ trong thời đại số
+- **1.2 Mục tiêu dự án:** 3 nghiệp vụ THỔ cần giải quyết
+- **1.3 Phạm vi:** Những gì hệ thống làm được (và chưa làm được)
+- **1.4 Đối tượng người dùng & Stakeholders:**
+  - Khách hàng (mua online, đặt workshop)
+  - THỔ - Doanh nghiệp (quản lý đơn hàng, lịch lò nung, nghệ nhân)
+  - Hệ thống (quản lý slot, trigger notification)
 
-*🎯 BA/PM chủ trì*
-
----
-
-## 📑 II. ANALYSIS *(5–6 trang)*
-
-*🎯 BA/PM chủ trì*
-
-- **2.1 Pain Point Analysis**
-  - Vấn đề của User (người mua hàng)
-  - Vấn đề của Business (admin, quản lý)
-  - Vấn đề của System (kỹ thuật, hiệu suất)
-
-- **2.2 Domain Selection**
-  - Tại sao chọn Thời trang / Nội thất?
-  - So sánh với các lĩnh vực khác
-
-- **2.3 Feature Matrix** *(dạng bảng)*
-
-  | Feature | User Benefit | Business KPI | Technical Challenge |
-  |---------|-------------|--------------|---------------------|
-  | Visual Search | Tìm sản phẩm bằng ảnh | Tăng conversion rate | Image recognition API |
-  | Quick Edit Cart | Đổi size ngay, không cần xóa | Giảm cart abandonment | State management |
-  | Address 1-N | Lưu nhiều địa chỉ giao hàng | Tăng retention | DB relationship design |
-
-- **2.4 Breakthrough Features**
-  - Visual Search (Tìm kiếm bằng ảnh)
-  - Smart Cart (Quick Edit)
-  - Smart Address Management
-
-- **2.5 Competitor Comparison**
-  - So sánh với Shopee, Tiki, Amazon
-  - Những gì hệ thống của nhóm làm tốt hơn
+*📐 Figma: Stakeholder diagram hoặc homepage mockup minh họa*
 
 ---
 
-## 📑 III. DESIGN *(8–10 trang)*
+## 📑 II. ANALYSIS *(5–6 trang)* — 🎯 BA/PM
 
-*🏗️ Backend + 🎨 Designer chủ trì*
+**2.1 Pain Point Analysis — 3 đối tượng**
 
-- **3.1 System Architecture Overview** *(diagram)*
-  - Tổng quan kiến trúc: Frontend ↔ Backend ↔ Database
+| Đối tượng | Pain Point |
+|-----------|-----------|
+| Khách hàng | Không thấy được texture gốm qua ảnh 2D; không biết tiến độ thành phẩm; không biết workshop còn chỗ không |
+| THỔ (Business) | Quản lý lịch nghệ nhân + bàn xoay thủ công; khó theo dõi trạng thái hàng trăm "cục đất sét" đang nung |
+| Hệ thống | Hybrid Cart khó xử lý (vật lý + vé số hóa); notification cần trigger theo stage thực tế lò nung |
 
-- **3.2 Business Process (BPMN Diagram)**
-  - Giải thích các swimlane, activities, gateways
-  - Include file `01_bpmn.png` (export 300 DPI)
+*📐 Figma: Pain point → màn hình giải quyết tương ứng*
 
-- **3.3 Use Case Diagram**
-  - Danh sách tất cả actors & use cases
-  - Giải thích relationships (`<<include>>`, `<<extend>>`)
-  - Include file `02_usecase.png`
+**2.2 Feature Matrix — 3 nghiệp vụ**
 
-- **3.4 Database Design (ERD)**
-  - ⭐ User — Address: **1-N**
-  - Product — ProductVariant: **1-N**
-  - Order — OrderItem: **1-N**
-  - Giải thích normalization choices
-  - Include file `03_erd.png`
+| Feature | User Benefit | Business KPI | Technical Challenge |
+|---------|-------------|--------------|---------------------|
+| Ceramic Tracker | Theo dõi thành phẩm theo thời gian thực | Tăng retention, giảm support tickets | CeramicTracker state machine + push notification |
+| Smart Slot Booking | Đặt lịch chắc chắn có chỗ | Tránh overbooking, tối ưu nghệ nhân | Check Instructor + Equipment đồng thời |
+| Hybrid Cart | Mua sản phẩm + đặt workshop trong 1 lần | Tăng AOV (average order value) | Split order: logistics + QR booking |
+| DIY Kit | Làm gốm tại nhà với hướng dẫn | Mở rộng thị trường ra ngoài TP lớn | Bundle product + video content |
 
-- **3.5 UI/UX Design (Figma)**
-  - Wireframes (Low-fi): Homepage, Search, Cart, Checkout...
-  - High-fidelity Mockups (screenshot từ Figma)
-  - Key screens: Search → Results → Detail → Cart → Address → Checkout → Confirmation
-  - Responsive variants (Desktop & Mobile)
+*📐 Figma: Screenshot Feature Matrix từ Figma (bảng so sánh UI)*
 
-- **3.6 Design Rationale**
-  - Tại sao design như vậy?
-  - UX reasoning — dựa trên hành vi người dùng
+**2.3 Competitor Analysis**
 
----
+So sánh THỔ với: các website gốm sứ hiện tại, Etsy (handmade marketplace), Airbnb Experiences (workshop booking).  
+Điểm THỔ làm tốt hơn: **Ceramic Tracker** — không đối thủ nào có tính năng theo dõi lộ trình sản phẩm cá nhân hóa.
 
-## 📑 IV. IMPLEMENTATION *(8–10 trang)*
+*📐 Figma: Comparison table screen*
 
-*⚙️ Frontend + 🏗️ Backend chủ trì*
+**2.4 Information Architecture (IA)**
+```
+THỔ Website
+├── Cửa hàng (E-commerce)
+│   ├── Lọc theo dòng men
+│   ├── Lọc theo loại sản phẩm
+│   └── DIY Kit
+├── Workshop (Booking)
+│   ├── Lọc theo địa điểm
+│   ├── Lọc theo cấp độ (Beginner/Expert)
+│   └── Lọc theo loại hình (Bàn xoay/Vuốt tay)
+└── Ceramic Tracker (Personalized)
+    ├── Mã vé / QR
+    ├── Timeline tiến độ lò nung
+    └── Nhật ký đất sét (ảnh quá trình)
+```
 
-- **4.1 Technology Stack**
-  - Frontend: React / Next.js, Tailwind CSS, Redux
-  - Backend: Node.js + Express (hoặc Python + FastAPI)
-  - Database: PostgreSQL
-  - Deployment: Docker, AWS / Heroku
-
-- **4.2 Backend Implementation**
-  - Database schema (SQL code snippet)
-  - API Endpoints (REST table)
-  - Image recognition integration
-  - Error handling & validation
-
-- **4.3 Frontend Implementation**
-  - Component structure (folder tree)
-  - State management approach
-  - Key component code snippets
-  - Screenshots of UI
-
-- **4.4 API Documentation**
-  - Swagger / OpenAPI spec (hoặc bảng request/response)
-  - Ít nhất 10 endpoints
-
-- **4.5 Figma → Code Mapping**
-  - Giải thích cách convert design thành component
-  - Design tokens (colors, spacing, typography)
-
-- **4.6 Key Challenges & Solutions**
-
-  | Thách thức | Giải pháp |
-  |-----------|-----------|
-  | Image processing latency | Async queue (job processing) |
-  | Address validation | Map API integration |
-  | Inventory conflict | Database locking / transaction |
+*📐 Figma: IA diagram hoặc Navigation flow*
 
 ---
 
-## 📑 V. TESTING & QUALITY ASSURANCE *(2–3 trang)*
+## 📑 III. DESIGN *(8–10 trang)* — 🏗️ Backend + 🎨 Designer
 
-*🧪 QA chủ trì*
+**3.1 System Architecture Overview**
+- Tổng quan: Frontend (Next.js) ↔ Backend (Node.js/Express) ↔ Database (PostgreSQL)
+- Notification service: trigger theo stage update từ Admin
 
-- **5.1 Test Strategy**
-  - Unit testing
-  - Integration testing
-  - E2E testing (Cypress / Playwright)
+**3.2 BPMN — Luồng 1: Mua Sản Phẩm Gốm**
+- Swimlane: Khách hàng | Hệ thống | Kho/Vận chuyển
+- Include: `01_bpmn_ecommerce.png`
 
-- **5.2 Test Results**
-  - Test cases passed: X / Y
-  - Code coverage: X%
-  - Performance metrics (response time, load time)
+**3.3 BPMN — Luồng 2: Đặt lịch Workshop**
+- Swimlane: Khách hàng | Hệ thống | Nghệ nhân
+- Logic: Kiểm tra Instructor (Available?) + Equipment (Active?) → nếu thiếu 1 trong 2 → Slot Full
+- Include: `02_bpmn_workshop.png`
 
-- **5.3 Bug Report**
-  - Danh sách bugs (Critical / Major / Minor)
-  - Bugs fixed vs. deferred
+**3.4 BPMN — Luồng 3: Ceramic Tracker ⭐**
+- Swimlane: Khách hàng | Hệ thống | Nghệ nhân (Admin lò)
+- Flow: Check-in QR → Forming → Drying → Bisque Firing → Glazing → Glaze Firing → Ready
+- Exception: Nung lỗi (Cracked) → Quay lại làm đền hoặc hoàn tiền
+- Tại mỗi bước: System gửi Notification cho khách
+- Include: `03_bpmn_tracker.png`
 
-- **5.4 User Testing Feedback** *(nếu có)*
-  - Feedback từ 3–5 test users
-  - Các iterations thực hiện dựa trên feedback
+*📐 Đây là luồng quan trọng nhất — giải thích chi tiết các touchpoints gửi notification*
+
+**3.5 Use Case Diagram**
+- Danh sách actors: Customer, Admin (THỔ), Instructor, System
+- UC01–UC06 (xem README_CHECKLIST.md)
+- Include: `05_usecase.png`
+
+**3.6 Database Design (ERD)**
+
+Các entities chính:
+- `Users` ←→ `Addresses` (1-N)
+- `Users` ←→ `Orders` (1-N)
+- `Orders` → tách thành `PhysicalOrderItem` + `WorkshopBooking`
+- `WorkshopSlot` ←→ `Instructors` (M-N, với trạng thái Available/Busy)
+- `WorkshopSlot` ←→ `Equipments` (M-N, với trạng thái Active/In-maintenance)
+- `WorkshopBooking` ←→ `CeramicTracker` (1-1)
+- `CeramicTracker` ←→ `Notifications` (1-N)
+- `Products` ←→ `ProductVariants` (1-N: size, màu men)
+
+*⭐ Ràng buộc quan trọng: `if (instructor_count = 0 OR equipment_count = 0) → slot.status = 'Full'`*
+
+Include: `04_erd.png`
+
+**3.7 UI/UX Design (Figma) ⭐ — Trọng tâm báo cáo**
+
+*Designer trình bày từng nhóm screen:*
+
+- **Homepage & Navigation:** Aesthetic thương hiệu THỔ, màu Terracotta + Celadon
+- **E-Commerce Flow:** Product listing (lọc men), Product Detail (texture close-up, DIY Kit badge), Cart
+- **Workshop Booking Flow:** Slot calendar, Kiểm tra availability indicator, Booking confirmation + QR
+- **Ceramic Tracker Dashboard ⭐:** Timeline 6 giai đoạn, progress bar, ảnh tại mỗi bước, notification history
+- **Hybrid Cart & Checkout:** 2 loại item hiển thị riêng biệt, split confirmation email preview
+- **Responsive Mobile:** Tracker đặc biệt phải đẹp trên mobile (khách check điện thoại)
+
+**3.8 Design Rationale**
+- Tại sao chọn màu Terracotta + Celadon? → Cảm xúc thủ công, tự nhiên
+- Tracker UI tại sao dùng timeline dọc? → Phù hợp mobile, dễ theo dõi theo thời gian
+- Hybrid Cart: tại sao phân tách 2 loại item rõ ràng? → Tránh nhầm lẫn, set đúng kỳ vọng giao hàng
 
 ---
 
-## 📑 VI. CONCLUSION *(1–2 trang)*
+## 📑 IV. IMPLEMENTATION *(6–8 trang)* — ⚙️ Frontend + 🏗️ Backend
 
-*🎯 BA/PM chủ trì*
+**4.1 Technology Stack**
+- Frontend: Next.js, Tailwind CSS, React Query
+- Backend: Node.js + Express
+- Database: PostgreSQL
+- Notifications: WebSocket hoặc Polling
 
-- **6.1 Achievements:** Đạt được những gì so với mục tiêu ban đầu?
-- **6.2 Breakthrough Points:** Những điểm nổi bật so với đối thủ cạnh tranh
-- **6.3 Limitations:** Hạn chế hiện tại của hệ thống
+**4.2 Backend — API & Logic cốt lõi**
+- Schema SQL (WorkshopSlot, CeramicTracker, Notifications)
+- Logic tách Hybrid Cart thành 2 đơn
+- State machine Ceramic Tracker + trigger notification
+
+**4.3 Frontend — Figma → Code**
+- Bảng so sánh: Figma frame ↔ Screenshot code thực tế
+- Component Tracker Timeline
+- Hybrid Cart UI
+
+**4.4 Key Challenges & Solutions**
+
+| Thách thức | Giải pháp |
+|-----------|-----------|
+| Slot overbooking | Check Instructor + Equipment đồng thời trong 1 transaction |
+| Hybrid Cart split bill | Tách order thành 2 record tại backend sau khi thanh toán |
+| Tracker notification delay | Admin cập nhật stage → webhook → push notification |
+| Nung lỗi (exception) | State machine có branch "Cracked" → hoàn tiền / làm lại |
+
+---
+
+## 📑 V. TESTING & QA *(2–3 trang)* — 🧪 QA
+
+**5.1 Test Strategy:** Unit, Integration, Flow testing
+
+**5.2 Test Cases đặc thù THỔ:**
+- Đặt slot khi Instructor đang bận → phải báo Full
+- Ceramic Tracker: cập nhật sai thứ tự stage → không cho phép
+- Hybrid Cart: thanh toán → kiểm tra 2 email confirmation gửi đúng
+- Nung lỗi → flow hoàn tiền hoạt động
+
+**5.3 Bug Report:** Critical / Major / Minor, trạng thái đã fix
+
+**5.4 User Testing Feedback** *(nếu có)*
+
+---
+
+## 📑 VI. CONCLUSION *(1–2 trang)* — 🎯 BA/PM
+
+- **6.1 Achievements:** 3 nghiệp vụ hoàn chỉnh, Ceramic Tracker là điểm đột phá
+- **6.2 Breakthrough Points:** Không đối thủ nào có Tracker + Hybrid Cart cho gốm sứ
+- **6.3 Limitations:** Chưa có real-time kiln monitoring (camera trong lò), chưa có Community feature
 - **6.4 Future Work:**
-  - Phase 2: Real-time recommendation
-  - Phase 3: AR try-on (thử đồ ảo)
-- **6.5 Lessons Learned:** Bài học rút ra từ quá trình thực hiện
+  - Phase 2: "Kho ảnh quá trình nung" — Community sharing
+  - Phase 3: AR xem sản phẩm tại nhà trước khi mua
+  - Phase 4: IoT tích hợp cảm biến lò nung → auto-update stage
+- **6.5 Lessons Learned:** Bài học thiết kế nghiệp vụ phức tạp (Hybrid Cart, State Machine)
 
 ---
 
 ## 📑 REFERENCES
-
-Danh sách papers, documentation, tools đã sử dụng  
-*(Định dạng APA hoặc IEEE)*
+Tài liệu, papers, tools sử dụng (APA / IEEE)
 
 ---
 
@@ -196,9 +220,10 @@ Danh sách papers, documentation, tools đã sử dụng
 
 | Appendix | Nội dung |
 |----------|----------|
-| A | Code Listings (Backend + Frontend — các file quan trọng) |
+| A | Code Listings (schema.sql, Tracker API, Cart split logic) |
 | B | API Documentation (full spec) |
-| C | Database Schema (SQL) |
-| D | Screenshots (Full flow walkthrough — từng bước) |
-| E | Test Report (Full test matrix) |
-| F | Figma Links & Design Files |
+| C | Full ERD (SQL schema) |
+| D | Screenshots toàn bộ flow (E-commerce, Workshop, Tracker) |
+| E | BPMN full (3 luồng) |
+| F | Figma link (share link view + prototype) |
+| G | Test Report (full matrix) |
