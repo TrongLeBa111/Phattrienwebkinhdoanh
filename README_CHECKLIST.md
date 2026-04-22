@@ -1,75 +1,134 @@
-# ✅ CHECKLIST KỸ THUẬT TỪNG ARTIFACT
+# ✅ CHECKLIST KỸ THUẬT TỪNG ARTIFACT — DỰ ÁN THỔ
 
 ---
 
-## 🖊️ Khi Vẽ Diagram (Draw.io)
+## 🖊️ Khi Vẽ BPMN (Draw.io) — 3 Luồng
 
-### BPMN (`01_bpmn.drawio`)
-- [ ] Có **3 swimlane**: Customer | System | Admin (Warehouse)
-- [ ] Các event, activity, gateway được vẽ rõ ràng
+### Luồng 1: Mua Sản Phẩm Gốm (`01_bpmn_ecommerce.drawio`)
+- [ ] Swimlane: **Khách hàng | Hệ thống | Kho/Vận chuyển**
+- [ ] Flow: Browse → Lọc sản phẩm → Detail → Add to Cart → Checkout → Thanh toán → Xác nhận → Giao hàng → Nhận hàng
+- [ ] Exception: Sản phẩm hết hàng → thông báo, gợi ý thay thế
 - [ ] Tối thiểu **10 nodes**
-- [ ] Vẽ "happy path" + xử lý exception (lỗi, hủy đơn)
-- [ ] Ghi chú mục đích từng activity
 
-### Use Case (`02_usecase.drawio`)
-- [ ] Tối thiểu **5 use cases**
-- [ ] Có `<<include>>` và `<<extend>>` để chỉ dependency
-  - VD: "Update Cart" bao gồm `<<include>>` "Validate Inventory"
-- [ ] Actors rõ ràng (Customer, Admin, System...)
-- [ ] Ghi chú mục đích từng use case
+### Luồng 2: Workshop Booking (`02_bpmn_workshop.drawio`)
+- [ ] Swimlane: **Khách hàng | Hệ thống | Nghệ nhân**
+- [ ] Flow: Xem workshop → Chọn slot → ⚠️ Kiểm tra Instructor (Available?) → Kiểm tra Equipment (Active?) → Nếu OK: Booking → Thanh toán → Nhận QR → Check-in → Workshop
+- [ ] Exception: Instructor bận HOẶC Equipment hỏng → Slot Full → Gợi ý slot khác
+- [ ] Tối thiểu **12 nodes** (phức tạp hơn luồng 1)
 
-**Use cases bắt buộc:**
-- UC01: Visual Search (Tìm kiếm bằng ảnh)
-- UC02: Update Cart — MODIFY không chỉ delete
-- UC03: Manage Address (1-N)
-- UC04: Apply Promo Code
-- UC05: Place Order (checkout flow)
+### Luồng 3: Ceramic Tracker ⭐ (`03_bpmn_tracker.drawio`)
+- [ ] Swimlane: **Khách hàng | Hệ thống | Nghệ nhân (Admin lò)**
+- [ ] Flow chính:
+  ```
+  Check-in QR → Tạo hình (Forming) → 🔔 → Phơi khô (Drying) → 🔔 →
+  Nung sơ (Bisque Firing) → 🔔 → Tráng men (Glazing) → 🔔 →
+  Nung hoàn thiện (Glaze Firing) → 🔔 → Sẵn sàng giao hàng (Ready) → 🎉 Notification
+  ```
+- [ ] Exception: **Nung lỗi (Cracked)** → Quay lại làm đền HOẶC Hoàn tiền
+- [ ] Ghi rõ từng điểm 🔔 Notification gửi đến khách
+- [ ] Tối thiểu **15 nodes** — đây là luồng "đắt giá" nhất
 
-### ERD (`03_erd.drawio`)
-- [ ] Tối thiểu **8 entities**
-- [ ] Mỗi entity có ít nhất **3 attributes**
-- [ ] Ghi rõ Primary Key (PK) và Foreign Key (FK)
-- [ ] Cardinality đầy đủ: 1-1, 1-N, N-N
-- [ ] ⭐ **User — Address: 1-N** (KHÔNG phải 1-1)
-- [ ] ⭐ **Product — ProductVariant: 1-N**
-- [ ] Order — OrderItem: 1-N
+**Export:** PNG + PDF (300 DPI) cho cả 3 file  
+**File naming:** `01_bpmn_ecommerce`, `02_bpmn_workshop`, `03_bpmn_tracker`
 
-**Export bắt buộc:** PNG + PDF (300 DPI)  
-**File naming:** `01_bpmn`, `02_usecase`, `03_erd`
+---
+
+## 📐 Khi Vẽ Use Case (`05_usecase.drawio`)
+- [ ] Tối thiểu **6 use cases**
+- [ ] Actors: Customer, Admin (THỔ), Instructor, System
+- [ ] Có `<<include>>` và `<<extend>>`
+
+**Use Cases bắt buộc:**
+- UC01: Browse & Purchase Ceramic Product
+- UC02: Book Workshop Slot  
+  - `<<include>>` UC: Check Instructor Availability  
+  - `<<include>>` UC: Check Equipment Availability
+- UC03: Check-in Workshop (QR)
+- UC04: Track Ceramic Progress ⭐
+  - `<<extend>>` UC: Receive Notification (triggered khi stage thay đổi)
+- UC05: Checkout Hybrid Cart
+  - `<<include>>` UC: Split Order (Physical + Workshop)
+- UC06: Admin cập nhật Tracker Stage
+
+---
+
+## 🗄️ Khi Vẽ ERD (`04_erd.drawio`)
+- [ ] Tối thiểu **10 entities**
+- [ ] Mỗi entity có ít nhất **3 attributes** (kèm data type)
+- [ ] Ghi rõ PK, FK, cardinality
+
+**Entities bắt buộc và quan hệ:**
+
+```
+Users (user_id, name, email, phone, created_at)
+  |--1-N--> Addresses (address_id, user_id, label, full_address, is_default)
+  |--1-N--> Orders (order_id, user_id, total, status, created_at)
+
+Orders
+  |--1-N--> PhysicalOrderItems (item_id, order_id, product_id, qty, price)
+  |--1-N--> WorkshopBookings (booking_id, order_id, slot_id, qr_code, status)
+
+Products (product_id, name, description, glaze_type, category, price)
+  |--1-N--> ProductVariants (variant_id, product_id, size, color, stock)
+
+WorkshopSlots (slot_id, date, time, capacity, status: Available/Full)
+  |--M-N--> Instructors (instructor_id, name, specialty, status: Available/Busy)
+  |--M-N--> Equipments (equipment_id, name, type: BanXoay/VuotTay, status: Active/Maintenance)
+
+WorkshopBookings
+  |--1-1--> CeramicTrackers (tracker_id, booking_id, stage, stage_updated_at, image_url)
+
+CeramicTrackers
+  |--1-N--> Notifications (notif_id, tracker_id, message, sent_at, channel: email/push)
+```
+
+⭐ **Ràng buộc nghiệp vụ cần ghi trong ERD:**
+- `if (instructor_available = 0 OR equipment_active = 0) → slot.status = 'Full'`
+- `CeramicTracker.stage` chỉ được tăng tiến (không được đi ngược), trừ exception Cracked
 
 ---
 
 ## 🎨 Khi Thiết Kế Figma
 
-### Cấu trúc file Figma
+### Cấu trúc file Figma THỔ
 ```
-Page 1: [Wireframes]
-Page 2: [Hi-Fi Design]
-Page 3: [Components]
-Page 4: [Prototype]
+Page 1: [Wireframes]       — Low-fi toàn bộ flow
+Page 2: [Hi-Fi Design]     — High quality với màu THỔ
+Page 3: [Components]       — Design System
+Page 4: [Prototype]        — Interactive journeys
 ```
 
-### Naming convention cho frames
+### Bảng màu bắt buộc
+| Token | Hex | Dùng cho |
+|-------|-----|----------|
+| `color-primary` | `#E2725B` | Buttons, headlines, CTAs |
+| `color-secondary` | `#708238` | Badges, accents, success states |
+| `color-bg` | `#FAF7F2` | Background (cream ấm) |
+| `color-text` | `#2C2C2C` | Body text |
+
+### Screens bắt buộc (≥14 screens)
 ```
 [01] Homepage
-[02] Search Results
-[03] Product Detail
-[04] Cart (Improved)
-[05] Address Selection
-[06] Checkout
-[07] Order Confirmation
+[02] Shop — Product Listing (lọc men/loại)
+[03] Product Detail (texture, DIY Kit badge)
+[04] Workshop Listing (lọc địa điểm, cấp độ)
+[05] Workshop Detail + Slot Calendar
+[06] Booking Confirmation + QR Preview
+[07] Hybrid Cart (2 loại item phân biệt rõ)
+[08] Checkout + Split Bill Preview
+[09] Order Confirmation (2 email preview)
+[10] Ceramic Tracker Dashboard ⭐
+[11] Tracker Detail — Timeline 6 stages
+[12] Notification History
+[13] Profile / My Orders + My Bookings
+[14] Mobile variant (Tracker screen tối thiểu)
 ```
 
-### Checklist thiết kế
-- [ ] Wireframe Desktop + Mobile layout
-- [ ] Hi-Fi: Color scheme, typography nhất quán
-- [ ] Component library (button, card, input, modal...)
-- [ ] **Prototype:** Ít nhất **3 interactive user journeys**
-  - Journey 1: Search bằng ảnh → Xem kết quả → Xem detail
-  - Journey 2: Thêm vào giỏ → Quick Edit size → Checkout
-  - Journey 3: Chọn / thêm địa chỉ giao hàng
-- [ ] Annotations tại mỗi screen: interaction, animation, error states
-- [ ] Responsive: Đã test trên phone + tablet
+### Prototype — 4 user journeys bắt buộc
+- [ ] **Journey 1:** Browse Shop → Product Detail → Add to Cart → Checkout
+- [ ] **Journey 2:** Workshop Listing → Chọn slot → Booking → Nhận QR
+- [ ] **Journey 3 ⭐:** Tracker — Check-in QR → Xem timeline → Nhận notification → Ready
+- [ ] **Journey 4:** Hybrid Cart (cả 2 loại) → Checkout → 2 confirmation
 
 ---
 
@@ -78,80 +137,60 @@ Page 4: [Prototype]
 ### Folder structure
 ```
 backend/
-├── controllers/    # Business logic
-├── routes/         # API endpoints
-├── models/         # DB models
-├── middlewares/    # Auth, validation
-├── utils/          # Helpers
+├── controllers/
+│   ├── productController.js
+│   ├── workshopController.js
+│   ├── trackerController.js
+│   └── cartController.js
+├── routes/
+├── models/
+├── services/
+│   └── notificationService.js  ← quan trọng
 ├── db/
-│   └── schema.sql  # Database schema
+│   └── schema.sql
 ├── .env.example
-└── README.md       # Setup instructions
+└── README.md
 ```
 
-### Checklist backend
-- [ ] Database migration files (có versioning)
-- [ ] Seed data để testing
-- [ ] **Ít nhất 10 API endpoints**, ví dụ:
-  - `POST /api/auth/login`
-  - `GET /api/products`
-  - `POST /api/search/image`
-  - `GET /api/user/addresses`
-  - `POST /api/user/addresses`
-  - `PUT /api/user/addresses/:id`
-  - `POST /api/orders`
-  - `DELETE /api/cart/item/:id`
-  - `PUT /api/cart/item/:id` ← Quick Edit
-  - `GET /api/orders/:id`
-- [ ] Input validation + error messages rõ ràng
-- [ ] XSS / CSRF protection
-- [ ] Xử lý image processing latency (async queue)
-- [ ] Unit test cho ít nhất **3 API endpoints**
-- [ ] `.env.example` có đầy đủ keys
-- [ ] API Swagger spec (hoặc Postman collection)
+### API endpoints bắt buộc (≥10)
+```
+GET    /api/products
+GET    /api/workshops
+GET    /api/workshops/:slotId/availability   ← kiểm tra Instructor + Equipment
+POST   /api/workshops/book
+POST   /api/cart/checkout                   ← split order logic
+GET    /api/tracker/:bookingId
+PUT    /api/tracker/:trackerId/stage        ← Admin cập nhật + trigger notification
+POST   /api/auth/checkin-qr
+GET    /api/user/orders
+GET    /api/user/bookings
+```
 
 ---
 
 ## ⚙️ Khi Code Frontend
 
-### Folder structure
-```
-frontend/
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Page-level components
-│   ├── hooks/          # Custom React hooks
-│   ├── store/          # Redux / Context state
-│   └── api/
-│       └── client.js   # Axios instance
-├── .env.example
-└── README.md
-```
-
-### Checklist frontend
-- [ ] Ít nhất **8 reusable components:**
-  - Button, Card, Input, Modal, Select
-  - SearchBar (có icon camera cho Visual Search)
-  - ProductCard
-  - ImprovedCart (với Quick Edit button)
-- [ ] Pages: Home | Search | ProductDetail | Cart | Checkout | Profile
-- [ ] State management: Redux hoặc Context API
-  - Global state: cart, user, filters
-- [ ] Axios instance với interceptors (auth, error handling)
-- [ ] Loading states: Skeleton screens, spinners
-- [ ] Error handling: Try-catch, error boundaries
-- [ ] Responsive: Mobile-first, tested trên phone + tablet
-- [ ] Lazy load images
+### Components bắt buộc (≥8)
+- `TrackerTimeline` — 6 stages với progress bar + notification badges
+- `HybridCart` — phân tách Physical Item vs Workshop Ticket
+- `SlotCalendar` — hiển thị available/full slots
+- `ProductCard` — có badge DIY Kit
+- `BookingQR` — hiển thị mã QR
+- `NotificationBadge`
+- `SearchBar` (lọc men, cấp độ)
+- `StageStatusBadge` — màu theo stage
 
 ---
 
 ## 📂 Checklist Nộp Bài Cuối Kỳ
 
-- [ ] `01_bpmn.png` + `01_bpmn.drawio`
-- [ ] `02_usecase.png` + `02_usecase.drawio`
-- [ ] `03_erd.png` + `03_erd.drawio`
-- [ ] Link Figma file (view + prototype)
-- [ ] `/backend` GitHub repo (với README setup)
-- [ ] `/frontend` GitHub repo (với README setup)
-- [ ] Báo cáo cuối: PDF (20–30 trang)
-- [ ] Slide thuyết trình (nếu có bảo vệ)
+- [ ] `01_bpmn_ecommerce.png` + `.drawio`
+- [ ] `02_bpmn_workshop.png` + `.drawio`
+- [ ] `03_bpmn_tracker.png` + `.drawio` ⭐
+- [ ] `04_erd.png` + `.drawio`
+- [ ] `05_usecase.png` + `.drawio`
+- [ ] Figma link (view mode + prototype link)
+- [ ] `/backend` GitHub repo
+- [ ] `/frontend` GitHub repo
+- [ ] Báo cáo PDF (20–30 trang) — có Figma screenshots trong từng section
+- [ ] Slide thuyết trình
